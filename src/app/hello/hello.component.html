@@ -1,0 +1,73 @@
+<!-- 콤포넌트 -->
+<h2>{{ inputName }}</h2>
+<input type="text" placeholder="이름을 입력 하세요" #inputYuorName> <!-- #name 같은 기본 돔 속성 입력 불가.-->
+<button (click)="setName(inputYuorName.value)">등록</button>
+<div [innerHtml]="content"></div><!-- 프로퍼티 바인딩 -->
+<div>
+  <ul>
+    <li [attr.id]="attrId">{{attrId}}</li>    <!-- 어트리뷰트 바인딩 -->
+  </ul>
+</div>
+<div class="classA" class.alert="isError">클래스A</div><!-- 단항 클래스 바인딩 -->
+<div class="classB" class.alert="isError">클래스B</div><!-- 단항 클래스 바인딩 -->
+<!-- 주의 할점 기존에 클래스A 라는 값이 이미 들어가 있는경우 덮어쓴다.-->
+
+<!-- 양방향 데이터 바인딩 -->
+<!-- 양방향 데이터 바인딩은 이벤트 바인딩과 프로퍼티 바인딩을 실행한것과 같다.-->
+<input type="text" [(ngModel)]="name"> <!-- 사용자 입력과 관련된 폼 요소에서서만 사용가능 input select textarea 등등ㄴ-->
+<p>name : {{name}}</p>
+
+
+<p>디렉티브 요소 아님</p>
+<!-- 빌트 인 디렉티브 :  APP 전역에서 사용함  -->
+<!-- 컴포넌트 내부에 디렉티브 생성후 사용하는 방법 을 알아볼 필요성이 있음-->
+<p appHighlight>디렉티브 요소</p>
+<p>디렉티브 요소 아님</p>
+
+<!-- 빌트인 어트리뷰트 디렉티브 -->
+<!-- 코테이션에 주의-->
+<!-- text-bold color-green 두개의 클래스가 부여된다.-->
+<!-- 이미 기존에 다른 class 값이 있을시 합쳐서 적용된다.-->
+<div [ngClass]="'text-bold color-green'">빌트인 어트리뷰트(ngClass)</div> <!-- 문자열 방식 -->
+<div [ngClass]="['text-bold', 'color-green']">빌트인 어트리뷰트</div> <!-- 배열 방식 -->
+<div [ngClass]="{'text-bold':true,'color-green':flase}">빌트인 어트리뷰트</div> <!-- 객체(제이슨) 방식 -->
+<!-- 이방식을 제일 많이 쓸듯.-->
+<div [ngClass]="{'text-bold':flase,'color-green':true}">빌트인 어트리뷰트</div> <!-- 객체(제이슨) 방식 -->
+<!-- 클래스 는 생략-->
+
+<!-- 직접 css 를 수정 함 기존 style 이 있을시 병합된다.-->
+<div [ngStyle]="{ color: 'red'}">빌트인 어트리뷰트(ngStyle)</div>
+
+
+<!-- 빌트인 구조 디렉티브 (중요함)-->
+<!-- ngif -->
+<!-- 직접 컴포넌트 변수에 접근도 이벤트를 통해서 가능 함-->
+<button (click)="show = !show">{{show ? 'hide' : 'show'}}</button>
+show = {{show}}
+<br>
+<!-- 대소문자에 주의-->
+<div *ngIf="show">Text to show</div>
+<div *ngIf="flag">Text to show</div>
+
+<!-- ngfor -->
+<input type="text" #username>
+<button (click)="addUser(username.value)">추가</button>
+<div>
+  <ul>
+    <li *ngFor="let user of users; let i=index">
+      <a>{{i}} : {{user.name}}</a>
+      <button (click)="removeUser(user.id)">삭제</button>
+    </li>
+  </ul>
+</div>
+
+<!-- ngSwitch -->
+<div [ngSwitch]="value">
+  <p *ngSwitchCase="1">1</p>
+  <p *ngSwitchCase="2">2</p>
+  <p *ngSwitchDefault>default</p>
+</div>
+
+<!-- 템플릿 참조 변수 -->
+<!-- 이미 했던내용 -->
+<!-- 템플릿네 #으로 정의된 엘리먼트 속성을 해당 템플릿 내에서만 이벤트 바인딩시 사용함.-->
